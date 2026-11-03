@@ -1,0 +1,6 @@
+codigo,partida,unidad,operacion,repeticiones,largo_m,ancho_m,alto_m,descuento,ref_plano,nota
+PRE-001,Cerco provisional (ejemplo),m,longitud,1,18,,,0,ARQ-P01,Longitud simulada
+EST-001,Concreto de zapatas (ejemplo),m3,volumen,2,1.50,1.50,0.50,0,EST-E01,Volumen geometricamente simplificado
+ARQ-001,Pintura de paramentos (ejemplo),m2,area,2,4.00,2.60,,0,ARQ-A01,Sin descuentos de vanos en este ejemplo
+SAN-001,Tuberia sanitaria (ejemplo),m,longitud,1,15.40,,,0,SAN-S01,Longitud ficticia
+ELE-001,Salidas electricas (ejemplo),und,conteo,12,,,,0,ELE-IE01,Cantidad ficticia

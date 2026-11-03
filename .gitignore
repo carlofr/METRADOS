@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+# Excel y editor
+~$*
+*.tmp
+*.bak
+*.swp
+.DS_Store
+Thumbs.db
+# Resultados generados de proyectos (no publicar accidentalmente)
+resultados/
+outputs/
+*.log

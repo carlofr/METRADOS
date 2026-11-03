@@ -1,0 +1,11 @@
+codigo,recurso,unidad_recurso,cantidad_por_unidad,precio_recurso_pen,fuente_precio,fecha_precio
+PRE-001,Cerco temporal ficticio,m,1,40,FICTICIO-SOLO-PRUEBA,2026-11-02
+PRE-001,Mano de obra ficticia,h,0.20,22,FICTICIO-SOLO-PRUEBA,2026-11-02
+EST-001,Concreto ficticio,m3,1,380,FICTICIO-SOLO-PRUEBA,2026-11-02
+EST-001,Mano de obra ficticia,h,2.50,24,FICTICIO-SOLO-PRUEBA,2026-11-02
+ARQ-001,Pintura ficticia,l,0.30,28,FICTICIO-SOLO-PRUEBA,2026-11-02
+ARQ-001,Mano de obra ficticia,h,0.35,20,FICTICIO-SOLO-PRUEBA,2026-11-02
+SAN-001,Tuberia ficticia,m,1,15,FICTICIO-SOLO-PRUEBA,2026-11-02
+SAN-001,Instalacion ficticia,h,0.30,20,FICTICIO-SOLO-PRUEBA,2026-11-02
+ELE-001,Dispositivo ficticio,und,1,18,FICTICIO-SOLO-PRUEBA,2026-11-02
+ELE-001,Instalacion ficticia,h,0.50,20,FICTICIO-SOLO-PRUEBA,2026-11-02

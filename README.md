@@ -1,44 +1,64 @@
-# Presupuestos de obra | Perú
+# METRADOS | Perú
+## Metrados y presupuestos de obras de edificación
 
-Repositorio de trabajo para organizar **partidas, metrados, análisis de precios unitarios (APU), presupuestos y resúmenes de obras de edificación** con trazabilidad a normativa peruana.
+Repositorio abierto para documentar partidas según la **Norma Técnica Metrados para Obras de Edificación y Habilitaciones Urbanas** (R.D. N.° 073-2010/VIVIENDA/VMCS-DNC), calcular cantidades geométricas trazables y elaborar un presupuesto ilustrativo a partir de análisis de precios unitarios (APU).
 
-> **Estado:** base técnica y plantilla operativa para captura y cálculo. No es un expediente técnico ni presupuesto definitivo. Las cantidades dependen de planos aprobados; los precios, rendimientos, porcentajes e impuestos deben validarse para cada obra y fecha. La publicación en GitHub está pendiente de autenticar la cuenta propietaria.
+**Estado:** versión inicial funcional (v0.1), no expediente técnico ni herramienta de certificación normativa. No incluye metrados de un proyecto real, precios de mercado ni verificación automática de todas las reglas de medición. Se requiere revisión y firma del profesional responsable.
 
-## Estructura
+### Directorios
 
-- `reglamento/`: catálogo CSV inicial con 171 ítems, 67 grupos y referencias verificadas al RNE y a la Norma Técnica de Metrados para Obras de Edificación y Habilitaciones Urbanas; separación expresa entre diseño, seguridad y medición.
-- `plantillas/`: inventario y notas sobre plantillas evaluadas.
-- `metrados/`: guías técnicas de cómputo organizadas por especialidad (`estructuras`, `arquitectura`, `sanitarias`, `electricas`).
-- `presupuesto/`: libro Excel maestro con partidas, metrados, APU, presupuesto y resumen ejecutivo.
-- `documentacion/`: decisiones técnicas, instrucciones, estado, datos faltantes, reporte ejecutivo y controles de calidad.
-- `scripts/`: utilitarios de comprobación y reconstrucción del libro (en una copia nueva).
+| Ruta | Contenido |
+| --- | --- |
+| reglamento/ | Fuentes oficiales, estructura OE/HU, límites y controles normativos |
+| metrados/ | Guías por especialidad: preliminares, estructuras, arquitectura, sanitarias, eléctricas, comunicaciones, gas y habilitaciones urbanas |
+| plantillas/ | CSV vacíos para metrado geométrico y recursos de APU |
+| ejemplos/ | Datos **ficticios**, únicamente para probar el flujo |
+| scripts/ | Motor de cálculo en Python estándar, sin dependencias externas |
+| presupuesto/ | Metodología de APU y consolidación económica |
+| documentacion/ | Alcance, control de calidad y hoja de ruta |
+| tests/ | Pruebas automáticas de fórmulas y validaciones |
+| .github/workflows/ | Pruebas continuas en GitHub Actions |
 
-## Puesta en marcha
+### Requisitos
 
-1. Descargue y abra `presupuesto/PRESUPUESTO_OBRA_BASE.xlsx` con Excel compatible con `.xlsx` y cálculo automático.
-2. En **Resumen**, complete primero identificación del proyecto y los porcentajes aplicables *validados*. Las celdas de ingreso están en **azul**; los vínculos en **verde** y los controles pendientes en **naranja**.
-3. En **Partidas**, elija `SI` en la columna H para los ítems del proyecto. El código OE normativo se conserva en columna A; el código presupuestal único se guarda en G. Para variantes de material o dimensiones revise `documentacion/INSTRUCCIONES_OPERATIVAS.md`.
-4. En **Metrados**, registre el **código presupuestal G**, elementos, dimensiones, cantidad, geometría y referencia verificable a plano/memoria. No hay cantidades de obra prefijadas.
-5. En **APU**, use el **mismo código presupuestal**, ingrese los recursos reales, unidad, cantidad por unidad de partida y precio unitario; el libro suma automáticamente el costo unitario de cada partida.
-6. Revise **Presupuesto** y **Resumen**: las partidas incompletas muestran alertas; las celdas de presupuesto no se consideran resultados finales mientras existan datos pendientes.
-7. Verifique con un profesional responsable la correspondencia de especialidades, los criterios de medición, rendimientos, IGV, gastos generales, utilidad y fecha de precios.
+Python 3.11 o superior. No se requiere instalar paquetes externos. Los CSV pueden editarse también en Excel (guardar como UTF-8, separador coma y decimal punto para el procesamiento).
 
-## Alcance normativo
+### Uso rápido
 
-El **Reglamento Nacional de Edificaciones (RNE)** define condiciones técnicas de diseño y construcción. Los **códigos OE** usados para la organización de partidas pertenecen a una **norma técnica de metrados distinta del RNE**. Las referencias y límites se documentan en `reglamento/REFERENCIAS_NORMATIVAS.md`. Este repositorio no redistribuye los textos oficiales protegidos ni los sustituye.
+1. Copie plantillas/planilla_metrados.csv y plantillas/apu_recursos.csv a su carpeta de proyecto; registre planos, partidas y precios debidamente sustentados.
+2. Para probar sin datos reales:
 
-## Publicación
+   python scripts/calcular.py metrados --entrada ejemplos/planilla_metrados.csv --salida resultados/metrados.csv
 
-Para crear el remoto en `https://github.com/<USUARIO>/presupuestos-de-obra`, consulte `documentacion/PUBLICACION_GITHUB.md`. No asuma que el remoto existe hasta obtener confirmación del servicio GitHub.
+   python scripts/calcular.py presupuesto --metrados resultados/metrados.csv --apu ejemplos/apu_recursos.csv --salida resultados/presupuesto.csv --resumen resultados/resumen.json
 
-## Licencia
+3. Revise los resultados, las unidades y la correspondencia con los planos. Los ejemplos utilizan costos ficticios y porcentajes indirectos por defecto en cero.
+4. Al calcular un proyecto real, indique los porcentajes validados de gastos generales, utilidad e IGV según modalidad, base tributaria y expediente. Consulte presupuesto/README.md.
+5. Ejecute las pruebas:
 
-El código, las plantillas originales y la documentación propia se distribuyen bajo licencia MIT (`LICENSE`). Las disposiciones legales, normas oficiales y los archivos aportados por terceros conservan su titularidad y condiciones de uso.
+   python -m unittest discover -s tests -v
 
-## Control de alcance y estado
+### Cómo funciona
 
-La entrega actual incluye **238 entradas normativas organizadas (171 ítems medibles y 67 agrupaciones)**. La selección corresponde a una base parcial documentada y no cubre todos los rubros de la NTM ni incorpora precios de mercado. La cuantificación y el presupuesto final continúan pendientes de datos del expediente técnico. Consulte `documentacion/DATOS_REQUERIDOS.md`, `documentacion/RESUMEN_EJECUTIVO.md` y `documentacion/INSTRUCCIONES_OPERATIVAS.md`.
+- La planilla usa cuatro operaciones geométricas: longitud (m), área (m2), volumen (m3) y conteo (und). No reemplazan la **forma de medición** ni las reglas de deducción exigidas por cada partida en la norma.
+- Cada fila requiere código presupuestal único por tipo de partida, descripción, referencia a plano, unidad y dimensiones. El código presupuestal es interno (p. ej. EST-001), **no es un código normativo OE**; registre el código OE aplicable en la documentación técnica del expediente.
+- Los metrados se consolidan por código. No se permite mezclar descripciones o unidades con el mismo código.
+- El APU se calcula sumando cantidad de recurso por unidad de partida × precio del recurso. El presupuesto es metrado × precio unitario.
+- Se reportan montos en S/ con redondeo financiero explícito. No se sustituyen verificaciones estructurales, instalaciones ni rendimientos de obra.
 
-Pruebe la estructura con `python scripts/verificar_libro.py`. La verificación comprueba correspondencia y sintaxis, pero **el recálculo de Excel debe efectuarse al abrir el libro en Microsoft Excel**. Véase `documentacion/CONTROL_CALIDAD.md`.
+### Fuentes principales
 
-**No ejecutar `scripts/crear_libro.py` encima de un libro con datos reales: el script reconstruye una plantilla vacía y sobrescribe el archivo.**
+- [Norma Técnica de Metrados – RD 073-2010 (copia alojada en SPIJ/Minjus)](https://spij.minjus.gob.pe/Graficos/Peru/2011/Mayo/18/RD-073-2010-VIVIENDA-VMCS-DNC.pdf)
+- [Reglamento Nacional de Edificaciones – MVCS](https://www.gob.pe/institucion/vivienda/informes-publicaciones/2309793-reglamento-nacional-de-edificaciones-rne)
+- [Actualización de E.030 – RM 183-2026-VIVIENDA](https://www.gob.pe/institucion/vivienda/normas-legales/8081915-183-2026-vivienda)
+- [Modificación transitoria de E.030 – RM 217-2026-VIVIENDA](https://www.gob.pe/institucion/vivienda/normas-legales/8219609-217-2026-vivienda)
+
+La norma de metrados (códigos OE/HU) y el RNE (diseño y ejecución) son instrumentos **distintos**. Consulte reglamento/REFERENCIAS_NORMATIVAS.md antes de elaborar un presupuesto.
+
+### Licencia y procedencia
+
+El código y la documentación original se distribuyen bajo MIT (LICENSE, ya existente). Los documentos oficiales enlazados y los aportes de terceros mantienen sus respectivos derechos. No se redistribuye el PDF normativo.
+
+### Colaboración
+
+Revise CONTRIBUTING.md. No publique datos personales, planos confidenciales ni precios contractuales sensibles sin autorización.
